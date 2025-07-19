@@ -40,12 +40,20 @@ selected_customer = st.selectbox("Pilih Nama Customer", customer_names)
 # Get all orders for selected customer
 cust_orders = df[df["Name"] == selected_customer]
 
-# Let user pick transaction date
-available_dates = df["Date"].tolist()
-selected_date = st.selectbox("Pilih Tanggal Transaksi", available_dates)
+available_dates = cust_orders["Date"].unique().tolist()
 
-# Get selected order row
-cust_row = cust_orders[cust_orders["Date"] == selected_date].iloc[0]
+if available_dates:
+    selected_date = st.selectbox("Pilih Tanggal Transaksi", available_dates)
+    match_row = cust_orders[cust_orders["Date"] == selected_date]
+
+    if not match_row.empty:
+        cust_row = match_row.iloc[0]
+        
+        # lanjutkan proses seperti biasa...
+    else:
+        st.warning("Tidak ditemukan data transaksi untuk tanggal tersebut.")
+else:
+    st.warning("Customer ini belum punya transaksi 'dice with irene'.")
 
 # Clean quantity from Discount column (remove 'pcs' etc.)
 qty_str = str(cust_row["Discount"])
