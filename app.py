@@ -31,7 +31,7 @@ df = pd.DataFrame(data)
 # Filter only for 'dice with irene'
 df = df[df["Item"] == "Dice with Irene"]
 
-st.title("🎲 Input Hasil Pull - Dice with Irene")
+st.title("🎲 Untuk Admin Lis Input Hasil Pull - Dice")
 
 # Select customer name
 customer_names = df["Name"].unique().tolist()
