@@ -41,7 +41,7 @@ selected_customer = st.selectbox("Pilih Nama Customer", customer_names)
 cust_orders = df[df["Name"] == selected_customer]
 
 # Let user pick transaction date
-available_dates = cust_orders["Timestamp"].tolist()
+available_dates = df["Timestamp"].tolist()
 selected_date = st.selectbox("Pilih Tanggal Transaksi", available_dates)
 
 # Get selected order row
