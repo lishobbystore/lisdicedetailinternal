@@ -29,7 +29,7 @@ data = orders_sheet.get_all_records()
 df = pd.DataFrame(data)
 
 # Filter only for 'dice with irene'
-df = df[df["Item"] == "dice with irene"]
+df = df[df["Item"] == "Dice with Irene"]
 
 st.title("🎲 Input Hasil Pull - Dice with Irene")
 
