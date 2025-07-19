@@ -55,6 +55,9 @@ if available_dates:
         qty_clean = ''.join(filter(str.isdigit, qty_str))
         qty = int(qty_clean) if qty_clean else 0
 
+        whatsapp = cust_row.get("WhatsApp", "")
+        address = cust_row.get("Alamat lengkap", "")
+
         st.info(f"{selected_customer} memesan **{qty} pcs** pada **{selected_date}**.")
 
         # Define dropdown choices
@@ -97,7 +100,9 @@ if available_dates:
                 selected_date,
                 qty,
                 pull_text,
-                product_text
+                product_text,
+                whatsapp,
+                address,
             ])
 
             st.success("✅ Data hasil pull berhasil dicatat di sheet 'PullResults'.")
