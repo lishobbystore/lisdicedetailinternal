@@ -41,11 +41,11 @@ selected_customer = st.selectbox("Pilih Nama Customer", customer_names)
 cust_orders = df[df["Name"] == selected_customer]
 
 # Let user pick transaction date
-available_dates = df["Timestamp"].tolist()
+available_dates = df["Date"].tolist()
 selected_date = st.selectbox("Pilih Tanggal Transaksi", available_dates)
 
 # Get selected order row
-cust_row = cust_orders[cust_orders["Timestamp"] == selected_date].iloc[0]
+cust_row = cust_orders[cust_orders["Date"] == selected_date].iloc[0]
 
 # Clean quantity from Discount column (remove 'pcs' etc.)
 qty_str = str(cust_row["Discount"])
