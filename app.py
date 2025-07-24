@@ -5,6 +5,9 @@ import pandas as pd
 from datetime import datetime
 import pytz
 import json
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning, module='pandas')
 
 # --- Google Sheets API setup ---
 scope = [
@@ -30,6 +33,14 @@ df = pd.DataFrame(data)
 
 # Filter only for 'dice with irene'
 df = df[df["Item"] == "Dice with Irene"]
+
+# Set timezone ke Asia/Jakarta
+tz = pytz.timezone("Asia/Jakarta")
+today = datetime.now(tz).date()
+
+# Parse kolom Date dan filter hanya yang tanggalnya adalah hari ini
+df["DateParsed"] = pd.to_datetime(df["Date"], errors='coerce')  # handle format yang invalid
+df = df[df["DateParsed"].dt.date == today]
 
 st.title("🎲 Untuk Admin Lis Input Hasil Pull - Dice")
 
