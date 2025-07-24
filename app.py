@@ -121,4 +121,4 @@ if available_dates:
     else:
         st.warning("Tidak ditemukan data transaksi untuk tanggal tersebut.")
 else:
-    st.warning("Customer ini belum punya transaksi 'dice with irene'.")
+    st.warning("Belum ada transaksi 'dice with irene' hari ini yang terdeteksi. Jika ini tidak benar, refresh halaman ini")
