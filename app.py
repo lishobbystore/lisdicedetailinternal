@@ -100,14 +100,14 @@ if available_dates:
 
             # Keep sheet structure: fill both text columns with the same selections
             product_text = "\n".join(selections)
-            pull_text = product_text
+            #pull_text = product_text
 
             results_sheet.append_row([
                 timestamp,
                 selected_customer,
                 selected_date,
                 qty,
-                pull_text,     # previously: dice category list → now same as product list
+                #pull_text,     # previously: dice category list → now same as product list
                 product_text,  # product selections (single dropdown per pull)
                 whatsapp,
                 address,
