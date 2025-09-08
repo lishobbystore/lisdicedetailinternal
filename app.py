@@ -73,14 +73,14 @@ if available_dates:
 
         # ✅ Simplified single-choice options (no dice categories)
         product_options = [
+            "pin",
+            "tcg genshin",
+            "2 pcs tcg pokemon",
             "Nendo bebas",
             "Nendo pilihan Lis",
             "Blokees",
             "boneka jamur",
             "price figure",
-            "pin",
-            "tcg genshin",
-            "2 pcs tcg pokemon",
         ]
 
         selections = []
