@@ -31,8 +31,8 @@ results_sheet = client.open_by_key(sheet_key).worksheet("PullResults")
 data = orders_sheet.get_all_records()
 df = pd.DataFrame(data)
 
-# Filter only for 'dice with irene'
-df = df[df["Item"] == "Dice with Irene"]
+# ✅ Filter only for 'Gacha with Irene'
+df = df[df["Item"] == "Gacha with Irene"]
 
 # Set timezone ke Asia/Jakarta
 tz = pytz.timezone("Asia/Jakarta")
@@ -42,7 +42,7 @@ today = datetime.now(tz).date()
 df["DateParsed"] = pd.to_datetime(df["Date"], errors='coerce')  # handle format yang invalid
 df = df[df["DateParsed"].dt.date == today]
 
-st.title("🎲 Untuk Admin Lis Input Hasil Pull - Dice")
+st.title("🎲 Untuk Admin Lis Input Hasil Pull - Gacha")
 
 # Select customer name
 customer_names = df["Name"].unique().tolist()
@@ -71,47 +71,44 @@ if available_dates:
 
         st.info(f"{selected_customer} memesan **{qty} pcs** pada **{selected_date}**.")
 
-        # Define dropdown choices
-        pull_choices = {
-            "beda semua": ["Keychain Genshin/HSR", "Nendoroid More Parts/Face", "Blokees Starlight/Defender"],
-            "2 sama": ["Badge", "Booster Genshin", "2 pcs Booster Pokemon"],
-            "3 sama": ["mousepad"],
-            "straight": ["2 pcs Keychain Genshin/HSR", "2pcs Nendoroid More Parts/Face", "2pcs Blokees Starlight/Defender"],
-            "2 x 2 sama": ["Teyvat Zoo", "Teyvat Paradasie", "Coin Pouch Collei"],
-            "4 sama": ["nendo"]
-        }
+        # ✅ Simplified single-choice options (no dice categories)
+        product_options = [
+            "Nendo bebas",
+            "Nendo pilihan Lis",
+            "Blokees",
+            "boneka jamur",
+            "price figure",
+            "pin",
+            "tcg genshin",
+            "2 pcs tcg pokemon",
+        ]
 
-        pull_results = []
-        product_results = []
+        selections = []
 
         st.markdown("### 🎁 Input Hadiah Berdasarkan Hasil Pull")
-
         for i in range(qty):
             st.markdown(f"#### Pull {i+1}")
-            col1, col2 = st.columns(2)
-
-            with col1:
-                pull = st.selectbox(f"Hasil Pull {i+1}", list(pull_choices.keys()), key=f"pull_{i}")
-            with col2:
-                product = st.selectbox(f"Hadiah {i+1}", pull_choices[pull], key=f"product_{i}")
-
-            pull_results.append(f"- {pull}")
-            product_results.append(f"- {product}")
+            choice = st.selectbox(
+                f"Hadiah {i+1}",
+                product_options,
+                key=f"product_{i}"
+            )
+            selections.append(f"- {choice}")
 
         if st.button("Submit Pull Results"):
-            tz = pytz.timezone("Asia/Jakarta")
             timestamp = datetime.now(tz).strftime("%Y-%m-%d %H:%M")
 
-            pull_text = "\n".join(pull_results)
-            product_text = "\n".join(product_results)
+            # Keep sheet structure: fill both text columns with the same selections
+            product_text = "\n".join(selections)
+            pull_text = product_text
 
             results_sheet.append_row([
                 timestamp,
                 selected_customer,
                 selected_date,
                 qty,
-                pull_text,
-                product_text,
+                pull_text,     # previously: dice category list → now same as product list
+                product_text,  # product selections (single dropdown per pull)
                 whatsapp,
                 address,
             ])
@@ -121,4 +118,4 @@ if available_dates:
     else:
         st.warning("Tidak ditemukan data transaksi untuk tanggal tersebut.")
 else:
-    st.warning("Belum ada transaksi 'dice with irene' hari ini yang terdeteksi. Jika ini tidak benar, refresh halaman ini")
+    st.warning("Belum ada transaksi 'Gacha with Irene' hari ini yang terdeteksi. Jika ini tidak benar, refresh halaman ini")
